@@ -1,0 +1,252 @@
+<!--
+        auteur :Ziad Biram
+        date : 2019
+       test 1
+-->
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Pizza</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+        <style >
+            h1{
+                color : teal;
+                font-size : 32pt;
+            }
+            body {
+                font-size : 1.3em;
+            }
+
+            input[type=checkbox]
+            {
+                transform: scale(1.5);
+                padding: 10px;
+            }
+
+            select, option {
+                font-size: 100%;
+                padding: 5px;
+                color : white;
+                background-color: orange;
+            }
+
+
+            h1, fieldset {
+                text-align : center;
+                color : rgb(33,136,56);
+
+            }
+
+            form {
+                width : 90%;
+                margin : 0 auto;
+            }
+
+            input[type=button] {
+                background-color : orange;
+            }
+
+            .green {
+                background-color : rgb(33,136,56);
+            }
+
+
+            table, td {
+
+                border : 2px solid rgb(33,136,56);
+                padding : 10px;
+                margin : 0 auto;
+
+            }
+
+        </style>
+        <script >
+
+            
+            function getNombresIngCoches()
+            {
+                var formulaireCheckBox = document.forms["frmPizza"].elements["chkIng"];
+                var nombre = 0;
+                
+                //boucle pour mettre le nombre des ingredient checker
+                for(let i = 0; i<formulaireCheckBox.length;i++)
+                {
+                    if(formulaireCheckBox[i].checked)
+                    {
+                        nombre++;
+                    }
+                }
+
+                return Number(nombre);
+            }
+
+            function getNombreIngChoisis()
+            {
+                var formulaireRadio = document.forms["frmPizza"].elements["optIng"]; 
+                var nombrIng = 0;
+
+                //boucle pour determiner le radio buton choisi et extraire la valeur
+                for(let i = 0; i < formulaireRadio.length; i++)
+                {
+                    if(formulaireRadio[i].checked)
+                    {
+                       nombrIng = formulaireRadio[i].value;
+                    }
+                }
+
+                return Number(nombrIng);
+            }
+
+            function getGrandeur()
+            {
+                var formulaireListe = document.forms["frmPizza"].elements["ddlTaille"];
+                var grangeurChoix = formulaireListe.options[formulaireListe.selectedIndex].text;
+
+                return grangeurChoix;
+            }
+
+            function commander(Form)
+            {
+                var formulaire = document.forms[Form];
+                var formulaireIng = formulaire.elements["chkIng"];
+                var ingredients = "";
+
+                for(let i = 0; i<formulaireIng.length;i++)
+                {
+                    if(formulaireIng[i].checked)
+                    {
+                        ingredients += formulaireIng[i].value + "\n";
+                    }
+                }
+
+                if(getNombreIngChoisis() == getNombresIngCoches())
+                {
+                    formulaire.elements["txtCommande"].value = "Nous préparons votre commande \nPizza : "
+                    + getGrandeur() + "\nNombre ingredients : " + getNombreIngChoisis() + "\n" +ingredients;
+                    
+                }   
+                else
+                {
+                    formulaire.elements["txtCommande"].value = "Vous devez Choisir "+ getNombreIngChoisis()+" ingredients"
+                }
+            }
+
+            function compteurCarac() 
+            {
+                var str = document.forms["frmPizza"].elements["txtCommentaires"].value;
+                document.forms["frmPizza"].elements["txtNombreCara"].value = str.length;
+            }
+
+
+        </script>
+    </head>
+
+    <body onload="initialiser()" >
+
+        <script>
+         function initialiser()
+                {
+                    var myForm =document.forms["frmPizza"];
+                    myForm.elements["txtCommande"].value = "";
+                    myForm.elements["txtCommentaires"].value = "";
+                    myForm.elements["txtNombreCara"].value = "";
+
+                    var formulaireCheck = myForm.elements["chkIng"];
+
+                    for(let i = 0; i<formulaireCheck.length;i++)
+                    {
+                        formulaireCheck[i].checked = true;
+                    }
+
+                        document.forms["frmPizza"].elements["txtCommande"].readOnly = true;
+                        document.forms["frmPizza"].elements["txtNombreCara"].readOnly = true; 
+
+                }
+        </script>
+        <div>
+            <form name="frmPizza">
+
+
+                <h1>Pizza Ziad Biram</h1>
+
+                <fieldset>
+                    <legend><strong>Commande</strong></legend>
+                    <br />
+
+                    <table>
+
+                        <tr>
+                            <td>
+                                <label><strong>Taille de la pizza:</strong>
+                                    <select name="ddlTaille">
+                                        <option value="9">9 pouces</option>
+                                        <option value="12">12 pouces</option>
+                                        <option value="15">15 pouces</option>
+                                    </select></label>
+                            </td>
+
+                            <td rowspan="2">
+                                <h3>Ingrédients:</h3>
+
+                                <label for="chkOignons">oignons</label> <input id="chkOignons" type="Checkbox" name="chkIng" value="oignons" />
+                                <label for="chkPiments">piments</label>  <input id="chkPiments" type="Checkbox" name="chkIng" value="piments" />
+                                <label for="chkHamburg">hamburg</label>  <input id="chkHamburg" type="Checkbox" name="chkIng" value="hamburg" />
+                                <label for="chkBacon">bacon</label>  <input id="chkBacon" type="Checkbox" name="chkIng" value="bacon" />
+                                <br />
+
+                                <label for="chkTomates">tomates</label>  <input id="chkTomates" type="Checkbox" name="chkIng" value="tomates" />
+                                <label for="chkChampignons">champignons</label>  <input id="chkChampignons" type="Checkbox" name="chkIng" value="champignons" />
+                                <label for="chkAnchois">anchois</label>  <input id="chkAnchois" type="Checkbox" name="chkIng" value="anchois" />
+                                <label for="chkOlives">olives</label>  <input  id="chkOlives" type="Checkbox" name="chkIng" value="olives" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>Nombre d'ingrédients:</strong>
+                                <label for="opt3Ings">3 ing.</label> <input id="opt3Ings" type="Radio" name="optIng" value="3" checked="checked" />&nbsp;&nbsp;
+                                <label for="opt6Ings">6 ing. </label><input id="opt6Ings" type="Radio" name="optIng" value="6" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2" class="green">
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2" >
+                                <input type="Button" name="btnCalculer" class="btn btn-success btn-lg" value="Passer la commande" onclick="commander('frmPizza')" />
+
+                                <input type="Button" name="btnInitialiser" class="btn btn-success btn-lg" value="Initialiser la session" onclick="initialiser()"/>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Détails de la commande<br />
+
+                                <textarea name="txtCommande" cols="60" rows="10"></textarea>
+                                <br />
+                            </td>
+                            <td >Commentaires:<br />
+
+                                <textarea name="txtCommentaires" cols="60" rows="5" onkeyup="compteurCarac()"></textarea>
+                                <br />Nombre de caractères : <input type="text" value="" name="txtNombreCara" size="10" />
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+
+                </fieldset>
+
+
+            </form>
+
+        </div>
+    </body>
+</html>

@@ -1,0 +1,90 @@
+<!--
+        auteur :Joel Boudreau
+        Etudiant suite: Ziad Biram
+        date : 2019
+       
+-->
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Click Bouton</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+        <style type="text/css">
+            #main {
+                background-color : silver;
+                height : 900px;
+            }
+            #btnClick {
+                margin : 50px;
+            }
+            p {
+                margin : 50px 0;
+                font-size : 1.5em;
+            }
+            
+            h1 {
+                margin-top : 1cm;
+            }
+           
+            
+        </style>
+        <script>
+            var tempsDebut;
+            var tempsFin;
+            var nombreClick = 0;
+            const TOTAL_CLICK = 20;
+
+        function cliqueBouton ()
+        {
+            if(nombreClick == 0) tempsDebut = new Date();
+            
+            nombreClick += 1;
+            document.getElementById("infoClick").textContent = nombreClick;
+            if(nombreClick == TOTAL_CLICK)
+            {
+            tempsFin = new Date();
+            document.getElementById("btnClick").disabled = true;
+            document.getElementById("message").textContent = 
+            "Tu a clique "+ TOTAL_CLICK + " fois en " +(tempsFin - tempsDebut) + " milliseconde";
+            } 
+        }
+
+        function rejouerfunc ()
+        {
+            nombreClick = 0;
+            document.getElementById("btnClick").disabled = false;
+            document.getElementById("message").textContent = "";
+            document.getElementById("infoClick").textContent = nombreClick;
+        }
+
+        </script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col"></div>
+                <div id="main" class="col-10">
+                    
+                    <form name="frmClique">
+                        <div class="text-center">
+                            <h1>Le clique rapide!!</h1>
+                            <p>Tu dois cliquer <script>document.write(TOTAL_CLICK);</script> fois le plus rapidement possible</p>
+                            <input type="button" class="btn btn-primary btn-lg" value="Clique Moi!" id="btnClick" name="btnClick" 
+                                   onclick="cliqueBouton();"/>
+                            <br />
+                            <input type="button" value="Rejouer" class="btn btn-success btn-lg" id="btnRejouer" name="btnRejouer"
+                                   onclick="rejouerfunc();"/>
+                            <p># de cliques : <span id="infoClick">0</span></p>
+                            <h3 id="message"></h3>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="col"></div>
+            </div>
+        </div>
+    </body>
+</html>
